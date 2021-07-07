@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  TeamsWebHookUrl:
+    Type: String
+    Default: https://xxx/webhookb2/xxx/IncomingWebhook/xxx
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: LambdaFunction/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        ApiEvent:
+          Type: HttpApi
+      Environment:
+        Variables:
+          TEAMS_INCOMING_WEBHOOK: !Sub ${TeamsWebHookUrl}
